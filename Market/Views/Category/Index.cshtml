@@ -1,0 +1,42 @@
+﻿@model List<Category>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <title>Category</title>
+</head>
+<body>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>
+                        @category.Id
+                    </td>
+                    <td>
+                        @category.Name
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="AddCategory" asp-controller="Category" class="btn btn-primary">Add Category</a>
+</body>
+</html>

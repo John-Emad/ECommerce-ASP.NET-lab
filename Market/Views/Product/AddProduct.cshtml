@@ -1,0 +1,44 @@
+﻿@model Product
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <title>Add Product Form</title>
+</head>
+<body>
+    <form method="post" asp-action="AddProduct" asp-controller="Product">
+        <div class="form-group">
+            <input class="form-control-plaintext" asp-for="Name" placeholder="Name" id="Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control-plaintext" asp-for="Price" placeholder="Price" id="Price" />
+        </div>
+        <div class="form-group">
+            <input class="form-control-plaintext" asp-for="Quantity" placeholder="Quantity" id="Quantity" />
+        </div>
+        <div class="form-group">
+            <input class="form-control-plaintext" asp-for="ProductionDate" placeholder="Production Date" id="ProductionDate" />
+        </div>
+        <div class="form-group">
+            <input class="form-control-plaintext" asp-for="ExpiryDate" placeholder="Expiry Date" id="ExpiryDate" />
+        </div>
+        <div class="form-group">
+            <select asp-for="CategoryId" class="form-select">
+                @foreach (Category category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">
+                        @category.Name
+                    </option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</body>
+</html>

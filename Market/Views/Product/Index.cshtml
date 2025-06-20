@@ -1,0 +1,72 @@
+﻿@model List<Product>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <title>Category</title>
+</head>
+<body>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <td>
+                    Category
+                </td>
+                <td>
+                    Price
+                </td>
+                <td>
+                    Quantity
+                </td>
+                <td>
+                    Production Date
+                </td>
+                <td>
+                    Expiry Date
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        @product.Id
+                    </td>
+                    <td>
+                        @product.Name
+                    </td>
+                    <td>
+                        @product.Category.Name
+                    </td>
+                    <td>
+                        @product.Price
+                    </td>
+                    <td>
+                        @product.Quantity
+                    </td>
+                    <td>
+                        @product.ProductionDate
+                    </td>
+                    <td>
+                        @product.ExpiryDate
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="AddProduct" asp-controller="Product" class="btn btn-primary">Add Product</a>
+</body>
+</html>
