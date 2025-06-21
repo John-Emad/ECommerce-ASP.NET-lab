@@ -1,0 +1,12 @@
+﻿@model Category
+@{
+    //Layout = null;
+    ViewBag.Title = "Edit Category";
+}
+
+    <form method="post" asp-action="EditCategory" asp-controller="Category">
+        <div class="form-floating">
+            <input class="form-control-plaintext" asp-for="Name" placeholder="Name" id="Name" />
+        </div>
+        <button type="submit" class="btn btn-primary">Edit Category</button>
+    </form>

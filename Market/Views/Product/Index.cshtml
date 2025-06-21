@@ -1,17 +1,8 @@
 ﻿@model List<Product>
 @{
-    Layout = null;
+    ViewBag.Title = "All Products";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
-    <title>Category</title>
-</head>
-<body>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -25,16 +16,7 @@
                     Category
                 </td>
                 <td>
-                    Price
-                </td>
-                <td>
-                    Quantity
-                </td>
-                <td>
-                    Production Date
-                </td>
-                <td>
-                    Expiry Date
+                    Actions
                 </td>
             </tr>
         </thead>
@@ -49,24 +31,15 @@
                         @product.Name
                     </td>
                     <td>
-                        @product.Category.Name
+                        @product.Category?.Name
                     </td>
                     <td>
-                        @product.Price
-                    </td>
-                    <td>
-                        @product.Quantity
-                    </td>
-                    <td>
-                        @product.ProductionDate
-                    </td>
-                    <td>
-                        @product.ExpiryDate
+                        <a asp-action="ProductDetails" asp-route-id="@product.Id" class="btn btn-primary">Details</a>
+                        <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="Delete" onclick="return confirm('Are you sure you want to delete student?')" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     <a asp-action="AddProduct" asp-controller="Product" class="btn btn-primary">Add Product</a>
-</body>
-</html>
