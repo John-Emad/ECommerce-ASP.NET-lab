@@ -10,7 +10,7 @@ namespace Market.Data
         {
             builder.HasMany(c => c.Products)
             .WithOne(p => p.Category)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

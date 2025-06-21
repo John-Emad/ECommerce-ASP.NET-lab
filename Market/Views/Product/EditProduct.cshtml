@@ -1,0 +1,42 @@
+﻿@model Product
+@{
+    //Layout = null;
+    SelectList categories = new SelectList(ViewBag.Categories, "Id", "Name", Model.CategoryId);
+    ViewBag.Title = "Edit Product";
+}
+
+    <form method="post" asp-action="EditProduct" asp-controller="Product">
+    <div class="form-group mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input class="form-control" asp-for="Name" placeholder="Enter product name" id="Name" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input class="form-control" asp-for="Price" placeholder="Enter price" id="Price" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Quantity" class="form-label">Quantity</label>
+        <input class="form-control" asp-for="Quantity" placeholder="Enter quantity" id="Quantity" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ProductionDate" class="form-label">Production Date</label>
+        <input class="form-control" asp-for="ProductionDate" type="date" id="ProductionDate" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ExpiryDate" class="form-label">Expiry Date</label>
+        <input class="form-control" asp-for="ExpiryDate" type="date" id="ExpiryDate" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="form-label">Category</label>
+        <select asp-for="CategoryId" class="form-select" asp-items="categories">
+            <option>
+                -- Select Category --
+            </option>
+        </select>
+    </div>
+        <button type="submit" class="btn btn-primary">Edit Product</button>
+    </form>
