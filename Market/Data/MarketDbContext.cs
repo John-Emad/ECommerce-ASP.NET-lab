@@ -9,6 +9,8 @@ namespace Market.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=MarketContext;Integrated Security=True;Trust Server Certificate=True;");
