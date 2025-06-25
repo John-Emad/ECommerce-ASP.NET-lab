@@ -1,5 +1,6 @@
 ﻿using Market.Data;
 using Market.Models;
+using Market.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,18 +8,20 @@ namespace Market.Controllers
 {
     public class ProductController : Controller
     {
-        public MarketDbContext context = new MarketDbContext();
-
+        //public MarketDbContext context = new MarketDbContext();
+        
+        IProductRepository productRepository = new ProductRepository();
+        ICategoryRepository categoryRepository = new CategoryRepository();
         // All Products View
         public IActionResult Index()
         {
-            return View(context.Products.Include(p => p.Category).ToList());
+            return View(productRepository.GetAll());
         }
 
         // Add Product View 
         public IActionResult AddProduct()
         {
-            ViewBag.Categories = context.Categories.ToList();
+            ViewBag.Categories = categoryRepository.GetAll();
             return View();
         }
 
@@ -26,8 +29,8 @@ namespace Market.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
-            context.Products.Add(product);
-            var values = context.SaveChanges();
+           productRepository.Add(product);
+            var values = productRepository.Save();
             return RedirectToAction("index");
         }
 
@@ -37,10 +40,10 @@ namespace Market.Controllers
             if (id == null)
                 return BadRequest();
 
-            Product product = context.Products.FirstOrDefault(s => s.Id == id);
+            Product product = productRepository.GetById(id.Value);
             if (product == null)
                 return NotFound();
-            ViewBag.Categories = context.Categories.ToList();
+            ViewBag.Categories = categoryRepository.GetAll();
             return View(product);
         }
 
@@ -48,8 +51,8 @@ namespace Market.Controllers
         [HttpPost]
         public IActionResult EditProduct(Product editedProduct)
         {
-            context.Update(editedProduct);
-            context.SaveChanges();
+            productRepository.Update(editedProduct);
+            productRepository.Save();
             return RedirectToAction("index");
         }
 
@@ -59,7 +62,7 @@ namespace Market.Controllers
             if (id == null)
                 return BadRequest();
 
-            Product product = context.Products.Include(p=>p.Category).FirstOrDefault(s => s.Id == id);
+            Product product = productRepository.GetById(id.Value);
             if (product == null)
                 return NotFound();
             return View(product);
@@ -69,7 +72,7 @@ namespace Market.Controllers
         // Product Delete View
         public IActionResult Delete(int id)
         {
-            Product product = context.Products.FirstOrDefault(s => s.Id == id);
+            Product product = productRepository.GetById(id);
             return View(product);
         }
 
@@ -81,13 +84,13 @@ namespace Market.Controllers
             if (id == null)
                 return BadRequest();
 
-            Product product = context.Products.FirstOrDefault(s => s.Id == id);
+            Product product = productRepository.GetById(id.Value);
 
             if (product == null)
                 return NotFound();
 
-            context.Products.Remove(product);
-            context.SaveChanges();
+            productRepository.Delete(product);
+            productRepository.Save();
             return RedirectToAction("index");
         }
 
