@@ -1,23 +1,21 @@
-﻿using Market.Data;
-using Market.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Market.Models;
+using Market.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Market.Controllers
 {
     public class CustomerController : Controller
     {
-        public MarketDbContext context = new MarketDbContext();
-
+        //public MarketDbContext context = new MarketDbContext();
+        ICustomerRepository customerRepository = new CustomerRepository();
         public ActionResult Index()
         {
-            return View(context.Customers.ToList());
+            return View(customerRepository.GetAll());
         }
 
         public ActionResult CustomerDetails(int? id)
         {
-            Customer customer = context.Customers.FirstOrDefault(s => s.Id == id);
+            Customer customer = customerRepository.GetById(id.Value);
             if (customer == null)
                 return NotFound();
             return View(customer);
@@ -33,8 +31,8 @@ namespace Market.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Customers.Add(customer);
-                var values = context.SaveChanges();
+                customerRepository.Add(customer);
+                var values = customerRepository.Save();
                 return RedirectToAction("index");
             }
             ViewBag.Customer = customer;

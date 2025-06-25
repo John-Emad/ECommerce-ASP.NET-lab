@@ -1,5 +1,6 @@
 ﻿using Market.Data;
 using Market.Models;
+using Market.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,18 +8,20 @@ namespace Market.Controllers
 {
     public class CategoryController : Controller
     {
-        public MarketDbContext context = new MarketDbContext();
+        //public MarketDbContext context = new MarketDbContext();
+
+        ICategoryRepository categoryRepository = new CategoryRepository();
         
         // View Categories
         public IActionResult Index()
         {
-            return View(context.Categories.ToList());
+            return View(categoryRepository.GetAll());
         }
         
         // Add Category View
         public IActionResult AddCategory()
         {
-            ViewBag.Categories = context.Categories.ToList();
+            ViewBag.Categories = categoryRepository.GetAll();
             return View();
         }
 
@@ -26,8 +29,8 @@ namespace Market.Controllers
         [HttpPost]
         public IActionResult AddCategory(Category category)
         {
-            context.Categories.Add(category);
-            var values = context.SaveChanges();
+            categoryRepository.Add(category);
+            var values = categoryRepository.Save();
             return RedirectToAction("index");
         }
 
@@ -37,7 +40,7 @@ namespace Market.Controllers
             if (id == null)
                 return BadRequest();
 
-            Category category = context.Categories.FirstOrDefault(s => s.Id == id);
+            Category category = categoryRepository.GetById(id.Value);
             if (category == null)
                 return NotFound();
             return View(category);
@@ -47,15 +50,15 @@ namespace Market.Controllers
         [HttpPost]
         public IActionResult EditCategory(Category editedCategory)
         {
-            context.Update(editedCategory);
-            context.SaveChanges();
+            categoryRepository.Update(editedCategory);
+            categoryRepository.Save();
             return RedirectToAction("index");
         }
 
         // Category Delete View
         public IActionResult Delete(int id)
         {
-            Category category = context.Categories.FirstOrDefault(s => s.Id == id);
+            Category category = categoryRepository.GetById(id);
             return View(category);
         }
 
@@ -67,13 +70,13 @@ namespace Market.Controllers
             if (id == null)
                 return BadRequest();
 
-            Category category = context.Categories.FirstOrDefault(s => s.Id == id);
+            Category category = categoryRepository.GetById(id.Value);
 
             if (category == null)
                 return NotFound();
 
-            context.Categories.Remove(category);
-            context.SaveChanges();
+            categoryRepository.Delete(category);
+            categoryRepository.Save();
             return RedirectToAction("index");
         }
     }
