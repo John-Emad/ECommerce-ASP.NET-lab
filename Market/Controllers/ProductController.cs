@@ -1,11 +1,13 @@
 ﻿using Market.Data;
 using Market.Models;
 using Market.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Market.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         //public MarketDbContext context = new MarketDbContext();
@@ -20,12 +22,14 @@ namespace Market.Controllers
         }
 
         // All Products View
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(productRepository.GetAll());
         }
 
         // Add Product View 
+
         public IActionResult AddProduct()
         {
             ViewBag.Categories = categoryRepository.GetAll();
@@ -64,6 +68,7 @@ namespace Market.Controllers
         }
 
         // Product Details View
+        [AllowAnonymous]
         public IActionResult ProductDetails(int? id)
         {
             if (id == null)

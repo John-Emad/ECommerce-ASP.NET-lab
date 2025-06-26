@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using Market.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Market.Controllers
 {
@@ -19,6 +20,11 @@ namespace Market.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public IActionResult Unauthorized()
         {
             return View();
         }

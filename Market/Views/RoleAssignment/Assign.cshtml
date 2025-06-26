@@ -1,0 +1,25 @@
+﻿@model Market.Models.User
+@{
+    ViewBag.Title = "Assign Roles";
+    var roles = ViewBag.Roles as List<SelectListItem>;
+}
+
+<h2>Assign Roles to @Model.FirstName</h2>
+
+<form asp-action="Assign" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        @foreach (var role in roles)
+        {
+            <div class="form-check">
+                <input type="checkbox" name="SelectedRoleIds" value="@role.Value"
+                       class="form-check-input" @(role.Selected ? "checked" : "") />
+                <label class="form-check-label">@role.Text</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
