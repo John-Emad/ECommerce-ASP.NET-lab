@@ -50,4 +50,37 @@ namespace Market.Repository
         public int Save();
 
     }
+
+    public interface IUserRepository 
+    {
+        public void Add(User user);
+
+        public User GetById(int id);
+
+        public List<User> GetAll();
+
+        public void Update(User user);
+
+        public void Delete(User user);
+
+        public int Save();
+
+        public User GetByEmailAndPassword(string email, string password);
+
+        public Role GetUserRoleById(int roleId);
+    }
+
+    public interface IRoleRepository
+    {
+        public void Add(Role role);
+
+        public Role GetById(int id);
+
+        public List<Role> GetAll();
+        public void Remove(Role role);
+
+        public void Save();
+        
+
+        }
 }
