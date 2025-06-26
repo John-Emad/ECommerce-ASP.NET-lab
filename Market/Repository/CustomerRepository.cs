@@ -5,7 +5,12 @@ namespace Market.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        MarketDbContext db = new MarketDbContext();
+        MarketDbContext db;
+
+        public CustomerRepository(MarketDbContext _db)
+        {
+            db = _db;
+        }
 
         public void Add(Customer customer)
         {

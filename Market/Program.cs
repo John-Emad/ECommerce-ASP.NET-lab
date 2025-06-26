@@ -1,7 +1,20 @@
+using Market.Data;
+using Market.Repository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+builder.Services.AddDbContext<MarketDbContext>(s =>
+{
+    // Default Scoped
+    s.UseSqlServer(builder.Configuration.GetConnectionString("dev"));
+});
 
 var app = builder.Build();
 

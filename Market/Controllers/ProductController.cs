@@ -9,9 +9,16 @@ namespace Market.Controllers
     public class ProductController : Controller
     {
         //public MarketDbContext context = new MarketDbContext();
-        
-        IProductRepository productRepository = new ProductRepository();
-        ICategoryRepository categoryRepository = new CategoryRepository();
+
+        IProductRepository productRepository;
+        ICategoryRepository categoryRepository;
+
+        public ProductController(IProductRepository _productRepository, ICategoryRepository _categoryRepository)
+        {
+            productRepository = _productRepository;
+            categoryRepository = _categoryRepository;
+        }
+
         // All Products View
         public IActionResult Index()
         {

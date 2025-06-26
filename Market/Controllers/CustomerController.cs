@@ -7,7 +7,12 @@ namespace Market.Controllers
     public class CustomerController : Controller
     {
         //public MarketDbContext context = new MarketDbContext();
-        ICustomerRepository customerRepository = new CustomerRepository();
+        ICustomerRepository customerRepository;
+        public CustomerController(ICustomerRepository _customerRepository)
+        {
+            customerRepository = _customerRepository;
+        }
+
         public ActionResult Index()
         {
             return View(customerRepository.GetAll());

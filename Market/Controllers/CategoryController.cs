@@ -10,8 +10,13 @@ namespace Market.Controllers
     {
         //public MarketDbContext context = new MarketDbContext();
 
-        ICategoryRepository categoryRepository = new CategoryRepository();
-        
+        ICategoryRepository categoryRepository;
+
+        public CategoryController(ICategoryRepository _categoryRepository)
+        {
+            categoryRepository = _categoryRepository;
+        }
+
         // View Categories
         public IActionResult Index()
         {
