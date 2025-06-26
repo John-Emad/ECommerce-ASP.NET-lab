@@ -5,17 +5,37 @@ namespace Market.Data
 {
     public class MarketDbContext : DbContext
     {
+        #region Sets
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
+        #endregion
+
+        #region Construstors
+        public MarketDbContext()
+        {
+            
+        }
+
+        public MarketDbContext(DbContextOptions<MarketDbContext> options) :base(options)
+        {
+            
+        }
+        #endregion
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=MarketContext;Integrated Security=True;Trust Server Certificate=True;");
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Optional fallback or log warning
+            }
+
             base.OnConfiguring(optionsBuilder);
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

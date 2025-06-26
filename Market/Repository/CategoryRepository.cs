@@ -5,7 +5,12 @@ namespace Market.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        MarketDbContext db = new MarketDbContext();
+        MarketDbContext db;
+
+        public CategoryRepository(MarketDbContext _db)
+        {
+            db = _db;
+        }
 
         public void Add(Category category)
         {

@@ -6,7 +6,12 @@ namespace Market.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        MarketDbContext db = new MarketDbContext();
+        MarketDbContext db;
+
+        public ProductRepository(MarketDbContext _db)
+        {
+            db = _db;
+        }
 
         public void Add(Product product)
         {
